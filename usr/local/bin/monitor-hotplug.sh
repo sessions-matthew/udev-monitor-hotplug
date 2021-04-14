@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sleep 10
 #Adapt this script to your needs.
 
 DEVICES=$(find /sys/class/drm/*/status)
@@ -37,27 +37,27 @@ do
   fi
 done <<< "$DEVICES"
 
-
-if [ ! -z "$HDMI1" -a ! -z "$VGA1" ]
+if [ ! -z "$HDMI1" -a ! -z "$DP1" ]
 then
-  echo "HDMI1 and VGA1 are plugged in"
-  xrandr --output LVDS1 --off
-  xrandr --output VGA1 --mode 1920x1080 --noprimary
-  xrandr --output HDMI1 --mode 1920x1080 --right-of VGA1 --primary
-elif [ ! -z "$HDMI1" -a -z "$VGA1" ]; then
-  echo "HDMI1 is plugged in, but not VGA1"
-  xrandr --output LVDS1 --off
-  xrandr --output VGA1 --off
-  xrandr --output HDMI1 --mode 1920x1080 --primary
-elif [ -z "$HDMI1" -a ! -z "$VGA1" ]; then
-  echo "VGA1 is plugged in, but not HDMI1"
-  xrandr --output LVDS1 --off
+  echo "HDMI1 and DP1 are plugged in"
+  #xrandr --output LVDS1 --off
+  xrandr --output DP1 --auto
+  xrandr --output HDMI1 --auto --right-of DP1
+elif [ ! -z "$HDMI1" -a -z "$DP1" ]; then
+  echo "HDMI1 is plugged in, but not DP1"
+  #xrandr --output LVDS1 --off
+  xrandr --output DP1 --off
+  xrandr --output HDMI1 --auto
+elif [ -z "$HDMI1" -a ! -z "$DP1" ]; then
+  echo "DP1 is plugged in, but not HDMI1"
+  #xrandr --output LVDS1 --off
   xrandr --output HDMI1 --off
-  xrandr --output VGA1 --mode 1920x1080 --primary
+  xrandr --output DP1 --auto --above eDP1
 else
   echo "No external monitors are plugged in"
-  xrandr --output LVDS1 --off
+  #xrandr --output LVDS1 --off
   xrandr --output HDMI1 --off
-  xrandr --output LVDS1 --mode 1366x768 --primary
+  xrandr --output DP1 --off
+  #xrandr --output LVDS1 --mode 1366x768 --primary
 fi
 

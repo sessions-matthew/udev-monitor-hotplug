@@ -1,3 +1,6 @@
+# Modified
+Works on my xps 9550 machine with Arch Linux
+
 # Description
 
 I was tired of having to configure manually the disposition of my monitors when I plugged them in.
