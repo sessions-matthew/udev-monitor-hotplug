@@ -1,5 +1,5 @@
 #!/bin/bash
-sleep 10
+# sleep 10
 #Adapt this script to your needs.
 
 DEVICES=$(find /sys/class/drm/*/status)
@@ -37,6 +37,9 @@ do
   fi
 done <<< "$DEVICES"
 
+# extra call to xrandr, race condition?
+xrandr
+
 if [ ! -z "$HDMI1" -a ! -z "$DP1" ]
 then
   echo "HDMI1 and DP1 are plugged in"
@@ -60,4 +63,3 @@ else
   xrandr --output DP1 --off
   #xrandr --output LVDS1 --mode 1366x768 --primary
 fi
-
